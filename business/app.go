@@ -14,8 +14,7 @@ type App struct {
 }
 
 func Run(ctx context.Context) (err error) {
-	var app App
-	return module.Run(ctx, &app)
+	return module.Run[App](ctx)
 }
 
 func (app *App) PreInit(ctx context.Context, field any) (err error) {

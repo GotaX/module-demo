@@ -26,14 +26,12 @@ type PostInitializer interface {
 	PostInit(ctx context.Context, field any) (err error)
 }
 
-func Run(ctx context.Context, app any) (err error) {
-	if err = requiredAppPointer(app); err != nil {
+func Run[App any](ctx context.Context) (err error) {
+	var app App
+	if err = doInit(ctx, &app); err != nil {
 		return
 	}
-	if err = doInit(ctx, app); err != nil {
-		return
-	}
-	return doRun(ctx, app)
+	return doRun(ctx, &app)
 }
 
 func doInit(ctx context.Context, app any) (err error) {
